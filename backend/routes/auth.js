@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../models/User')
-
 const fetchuser = require("../middleware/fetchuser")
+
 const jwt_SECRET = "iamaboy";
 
 // Route 1 : Create a user: POST "/api/auth/createuser". No login required
@@ -95,7 +95,7 @@ router.post('/getuser', fetchuser, async (req, res) => {
     try {
         userId = req.user;
         const user = await User.findById(userId).select('-password');
-        res.json(user);
+        res.send(user);
 
     } catch (error) {
         console.log(error.message);
