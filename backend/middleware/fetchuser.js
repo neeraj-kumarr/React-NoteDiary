@@ -2,18 +2,17 @@ var jwt = require('jsonwebtoken');
 const jwt_SECRET = "iamaboy";
 
 const fetchuser = (req, res, next) => {
-    // Get user from jwt and add id to object
     const token = req.header('auth-token');
     if (!token) {
-        res.status(401).send({ error: "Please authenticate using valid token" })
+        return res.status(401).send({ error: "Please authenticate using a valid token" });
     }
 
     try {
         const data = jwt.verify(token, jwt_SECRET);
-        req.user = data.id; // Update this line to correctly set req.user
+        req.user = data.id; // Check this line to ensure it's correctly setting req.user
         next();
     } catch (error) {
-        res.status(401).send({ error: "Please authenticate using valid token" })
+        return res.status(401).send({ error: "Please authenticate using a valid token" });
     }
 }
 
